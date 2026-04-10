@@ -6,8 +6,10 @@ A comprehensive web application for visualizing and experimenting with machine l
 
 - **Multiple Algorithms**: Random Forest, Logistic Regression, Gradient Boosting, SGD, AdaBoost, Linear Regression
 - **Real-time Hyperparameter Tuning**: Adjust parameters and instantly see the impact
+- **Upload Custom Data**: Use your own CSV files for training
+- **Real-World Datasets**: Iris, Wine, Breast Cancer, Digits, Adult Income, California Housing, and synthetic datasets
+- **Comprehensive Hyperparameters**: Every algorithm has full control over its hyperparameters
 - **Interactive Visualizations**: Decision boundaries, confusion matrices, feature importance plots
-- **Famous Datasets**: Iris, Wine, Breast Cancer, Digits, and synthetic datasets
 - **Performance Metrics**: Accuracy, Precision, Recall, F1-Score, AUC-ROC for classification; MSE, RMSE, MAE, R² for regression
 - **Data Distribution Plots**: 2D PCA projections of datasets
 - **Model Information**: Complete configuration and hyperparameter details
@@ -44,38 +46,66 @@ The application will open in your default browser at `http://localhost:8501`
 ## 📖 How to Use
 
 1. **Select Task Type**: Choose between Classification or Regression from the sidebar
-2. **Pick a Dataset**: Select from various datasets appropriate for your task
+2. **Choose Data Source**: Either select a built-in dataset or upload your own CSV file
 3. **Choose an Algorithm**: Select your desired machine learning algorithm
 4. **Adjust Hyperparameters**: Use the sliders and dropdowns to modify algorithm parameters
 5. **Train Model**: Click the "Train Model" button to train and visualize results
 
+### Uploading Custom CSV Data
+
+To use your own dataset:
+1. Prepare a CSV file with features and a target column
+2. The last column should be the target variable
+3. Click "Upload CSV File" in the sidebar and select your file
+4. The app will automatically process and use your data
+
+Example CSV format:
+```
+Feature1,Feature2,Feature3,Feature4,Target
+1.2,2.5,3.1,4.2,0
+2.3,3.1,4.5,5.2,0
+3.4,4.2,5.6,6.3,1
+...
+```
+
 ### Hyperparameter Ranges
 
-**Random Forest**:
+**Random Forest** (Classification & Regression):
 - Number of Trees: 1-500
 - Max Depth: 1-50
 - Min Samples Split: 2-20
 - Min Samples Leaf: 1-10
+- Max Features: sqrt, log2, None
 
 **Logistic Regression**:
 - Regularization Strength (C): 0.001-100
 - Max Iterations: 100-2000
-- Solver: lbfgs, liblinear, saga
+- Solver: lbfgs, liblinear, saga, newton-cg
+- Penalty Type: l2, l1, elasticnet
 
-**Gradient Boosting**:
+**Linear Regression**:
+- Fit Intercept: True/False
+- Copy X: True/False
+- Force Positive Coefficients: True/False
+
+**Gradient Boosting** (Classification & Regression):
 - Number of Estimators: 10-500
 - Learning Rate: 0.001-1.0
 - Max Depth: 1-15
+- Min Samples Split: 2-20
+- Min Samples Leaf: 1-10
 - Subsample Ratio: 0.1-1.0
 
-**SGD (Classification/Regression)**:
-- Loss Function: Various options
-- Alpha (Learning Rate): 0.00001-0.01
+**SGD Classifier/Regressor**:
+- Loss Function: Multiple options
+- Penalty Type: l2, l1, elasticnet, None
+- Alpha (Learning Rate): 0.00001-0.1
 - Max Iterations: 100-2000
 
-**AdaBoost**:
+**AdaBoost** (Classification & Regression):
 - Number of Estimators: 10-200
 - Learning Rate: 0.1-2.0
+- Algorithm: SAMME, SAMME.R (Classification only)
 
 ## 📊 Visualization Tabs
 
@@ -124,10 +154,15 @@ sklearn_hp/
 2. **Wine** - 178 samples, 13 features, 3 classes
 3. **Breast Cancer** - 569 samples, 30 features, 2 classes
 4. **Digits** - 1797 samples, 64 features, 10 classes
-5. **Make Classification** - 500 samples, 20 features, 2 classes
+5. **Make Classification** - 1000 samples, 20 features, 2 classes (synthetic)
+6. **Adult (Income)** - Real-world income prediction dataset
 
 ### Regression:
-1. **Make Regression** - 500 samples, 20 features
+1. **Make Regression** - 1000 samples, 20 features (synthetic)
+2. **California Housing** - 20640 samples, 8 features, real housing data
+
+### Custom Data:
+- Upload any CSV file with your own data
 
 ## 🧠 Algorithms Explained
 

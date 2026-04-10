@@ -23,6 +23,7 @@ def train_model(X, y, algorithm, hyperparams, task_type="classification"):
                 max_depth=hyperparams.get('max_depth', None),
                 min_samples_split=hyperparams.get('min_samples_split', 2),
                 min_samples_leaf=hyperparams.get('min_samples_leaf', 1),
+                max_features=hyperparams.get('max_features', None),
                 random_state=42,
                 n_jobs=-1
             )
@@ -31,6 +32,7 @@ def train_model(X, y, algorithm, hyperparams, task_type="classification"):
                 C=hyperparams.get('C', 1.0),
                 max_iter=hyperparams.get('max_iter', 100),
                 solver=hyperparams.get('solver', 'lbfgs'),
+                penalty=hyperparams.get('penalty', 'l2'),
                 random_state=42,
                 n_jobs=-1
             )
@@ -40,12 +42,14 @@ def train_model(X, y, algorithm, hyperparams, task_type="classification"):
                 learning_rate=hyperparams.get('learning_rate', 0.1),
                 max_depth=hyperparams.get('max_depth', 3),
                 min_samples_split=hyperparams.get('min_samples_split', 2),
+                min_samples_leaf=hyperparams.get('min_samples_leaf', 1),
                 subsample=hyperparams.get('subsample', 1.0),
                 random_state=42
             )
         elif algorithm == "SGD Classifier":
             model = SGDClassifier(
                 loss=hyperparams.get('loss', 'hinge'),
+                penalty=hyperparams.get('penalty', 'l2'),
                 alpha=hyperparams.get('alpha', 0.0001),
                 max_iter=hyperparams.get('max_iter', 1000),
                 random_state=42,
@@ -55,6 +59,7 @@ def train_model(X, y, algorithm, hyperparams, task_type="classification"):
             model = AdaBoostClassifier(
                 n_estimators=hyperparams.get('n_estimators', 50),
                 learning_rate=hyperparams.get('learning_rate', 1.0),
+                algorithm=hyperparams.get('algorithm', 'SAMME.R'),
                 random_state=42
             )
             
@@ -65,11 +70,16 @@ def train_model(X, y, algorithm, hyperparams, task_type="classification"):
                 max_depth=hyperparams.get('max_depth', None),
                 min_samples_split=hyperparams.get('min_samples_split', 2),
                 min_samples_leaf=hyperparams.get('min_samples_leaf', 1),
+                max_features=hyperparams.get('max_features', None),
                 random_state=42,
                 n_jobs=-1
             )
         elif algorithm == "Linear Regression":
-            model = LinearRegression()
+            model = LinearRegression(
+                fit_intercept=hyperparams.get('fit_intercept', True),
+                copy_X=hyperparams.get('copy_X', True),
+                positive=hyperparams.get('positive', False)
+            )
             
         elif algorithm == "Gradient Boosting":
             model = GradientBoostingRegressor(
@@ -77,12 +87,14 @@ def train_model(X, y, algorithm, hyperparams, task_type="classification"):
                 learning_rate=hyperparams.get('learning_rate', 0.1),
                 max_depth=hyperparams.get('max_depth', 3),
                 min_samples_split=hyperparams.get('min_samples_split', 2),
+                min_samples_leaf=hyperparams.get('min_samples_leaf', 1),
                 subsample=hyperparams.get('subsample', 1.0),
                 random_state=42
             )
         elif algorithm == "SGD Regressor":
             model = SGDRegressor(
                 loss=hyperparams.get('loss', 'squared_error'),
+                penalty=hyperparams.get('penalty', 'l2'),
                 alpha=hyperparams.get('alpha', 0.0001),
                 max_iter=hyperparams.get('max_iter', 1000),
                 random_state=42

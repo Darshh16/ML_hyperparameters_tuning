@@ -31,16 +31,41 @@ After running the app:
 
 2. **Select Configuration**:
    - Choose "Classification" or "Regression"
-   - Pick a dataset (e.g., "Iris")
+   - Pick a data source (Built-in dataset or Upload CSV)
+   - Select a dataset (e.g., "Iris") or upload your CSV file
    - Select an algorithm (e.g., "Random Forest")
 
 3. **Adjust Hyperparameters**:
-   - Use the sliders in the sidebar
+   - Use the sliders/dropdowns for each algorithm parameter
    - Try different values to see their impact
+   - Every algorithm has comprehensive controls
 
 4. **Train & Visualize**:
    - Click "Train Model"
    - Explore the tabs to see different visualizations
+
+## 📤 Uploading Your Own Data
+
+### CSV Format Requirements:
+- Must be a valid CSV file
+- All columns except the last should be numeric features
+- The last column is the target variable (labels for classification, values for regression)
+
+### Example:
+```csv
+Feature1,Feature2,Feature3,Target
+1.5,2.3,3.1,0
+2.6,3.4,4.2,0
+3.7,4.5,5.3,1
+4.8,5.6,6.4,1
+```
+
+### Steps:
+1. Select "Upload CSV File" in the sidebar
+2. Click "Browse files" and select your CSV
+3. Wait for "✓ File uploaded successfully!" message
+4. Choose algorithm and adjust hyperparameters
+5. Click "Train Model"
 
 ## 🎮 Interactive Features
 
