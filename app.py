@@ -121,6 +121,33 @@ with st.sidebar:
         if task_type_lower == "classification":
             hyperparams['algorithm'] = st.selectbox("Algorithm", ['SAMME', 'SAMME.R'])
     
+    elif algorithm == "Decision Tree":
+        st.write("**Core Parameters:**")
+        max_depth_value = st.slider("Max Depth (0=Unlimited)", 0, 50, 15)
+        hyperparams['max_depth'] = None if max_depth_value == 0 else max_depth_value
+        hyperparams['min_samples_split'] = st.slider("Min Samples Split", 2, 50, 2)
+        hyperparams['min_samples_leaf'] = st.slider("Min Samples Leaf", 1, 20, 1)
+        
+        st.write("**Feature Selection:**")
+        hyperparams['max_features'] = st.selectbox("Max Features", [None, 'sqrt', 'log2', 'auto'])
+        
+        st.write("**Split Criteria:**")
+        if task_type_lower == "classification":
+            hyperparams['criterion'] = st.selectbox("Criterion (Split Quality)", ['gini', 'entropy', 'log_loss'])
+        else:
+            hyperparams['criterion'] = st.selectbox("Criterion (Split Quality)", ['squared_error', 'friedman_mse', 'absolute_error', 'poisson'])
+        
+        hyperparams['splitter'] = st.selectbox("Splitter", ['best', 'random'])
+        
+        st.write("**Regularization:**")
+        hyperparams['min_impurity_decrease'] = st.slider("Min Impurity Decrease", 0.0, 1.0, 0.0, step=0.01)
+        hyperparams['ccp_alpha'] = st.slider("Cost Complexity Pruning Alpha (ccp_alpha)", 0.0, 0.1, 0.0, step=0.001)
+        
+        if task_type_lower == "classification":
+            hyperparams['class_weight'] = st.selectbox("Class Weight", [None, 'balanced'])
+        
+        st.info("💡 **Decision Tree Tips:** Lower max_depth and higher min_samples_* prevent overfitting. Use ccp_alpha for pruning.")
+    
     # Training settings
     st.subheader("🚀 Training")
     run_button = st.button("Train Model", key="train_button", use_container_width=True)

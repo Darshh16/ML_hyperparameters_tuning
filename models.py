@@ -1,4 +1,5 @@
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor, AdaBoostClassifier, AdaBoostRegressor
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
 from sklearn.linear_model import LinearRegression, LogisticRegression, SGDClassifier, SGDRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import (
@@ -62,6 +63,19 @@ def train_model(X, y, algorithm, hyperparams, task_type="classification"):
                 algorithm=hyperparams.get('algorithm', 'SAMME.R'),
                 random_state=42
             )
+        elif algorithm == "Decision Tree":
+            model = DecisionTreeClassifier(
+                max_depth=hyperparams.get('max_depth', None),
+                min_samples_split=hyperparams.get('min_samples_split', 2),
+                min_samples_leaf=hyperparams.get('min_samples_leaf', 1),
+                max_features=hyperparams.get('max_features', None),
+                criterion=hyperparams.get('criterion', 'gini'),
+                splitter=hyperparams.get('splitter', 'best'),
+                class_weight=hyperparams.get('class_weight', None),
+                min_impurity_decrease=hyperparams.get('min_impurity_decrease', 0.0),
+                ccp_alpha=hyperparams.get('ccp_alpha', 0.0),
+                random_state=42
+            )
             
     else:  # regression
         if algorithm == "Random Forest":
@@ -105,6 +119,18 @@ def train_model(X, y, algorithm, hyperparams, task_type="classification"):
                 learning_rate=hyperparams.get('learning_rate', 1.0),
                 random_state=42
             )
+        elif algorithm == "Decision Tree":
+            model = DecisionTreeRegressor(
+                max_depth=hyperparams.get('max_depth', None),
+                min_samples_split=hyperparams.get('min_samples_split', 2),
+                min_samples_leaf=hyperparams.get('min_samples_leaf', 1),
+                max_features=hyperparams.get('max_features', None),
+                criterion=hyperparams.get('criterion', 'squared_error'),
+                splitter=hyperparams.get('splitter', 'best'),
+                min_impurity_decrease=hyperparams.get('min_impurity_decrease', 0.0),
+                ccp_alpha=hyperparams.get('ccp_alpha', 0.0),
+                random_state=42
+            )
     
     # Train model
     model.fit(X_train, y_train)
@@ -132,6 +158,6 @@ def train_model(X, y, algorithm, hyperparams, task_type="classification"):
 def get_available_algorithms(task_type="classification"):
     """Return available algorithms based on task type"""
     if task_type == "classification":
-        return ["Random Forest", "Logistic Regression", "Gradient Boosting", "SGD Classifier", "AdaBoost"]
+        return ["Random Forest", "Logistic Regression", "Gradient Boosting", "SGD Classifier", "AdaBoost", "Decision Tree"]
     else:
-        return ["Linear Regression", "Random Forest", "Gradient Boosting", "SGD Regressor", "AdaBoost"]
+        return ["Linear Regression", "Random Forest", "Gradient Boosting", "SGD Regressor", "AdaBoost", "Decision Tree"]

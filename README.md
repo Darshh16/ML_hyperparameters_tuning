@@ -4,11 +4,12 @@ A comprehensive web application for visualizing and experimenting with machine l
 
 ## 🎯 Features
 
-- **Multiple Algorithms**: Random Forest, Logistic Regression, Gradient Boosting, SGD, AdaBoost, Linear Regression
+- **Multiple Algorithms**: Random Forest, Logistic Regression, Gradient Boosting, SGD, AdaBoost, Decision Tree, Linear Regression
 - **Real-time Hyperparameter Tuning**: Adjust parameters and instantly see the impact
 - **Upload Custom Data**: Use your own CSV files for training
 - **Real-World Datasets**: Iris, Wine, Breast Cancer, Digits, Adult Income, California Housing, and synthetic datasets
 - **Comprehensive Hyperparameters**: Every algorithm has full control over its hyperparameters
+- **Decision Tree Integration**: Full Decision Tree support with 9+ tunable hyperparameters
 - **Interactive Visualizations**: Decision boundaries, confusion matrices, feature importance plots
 - **Performance Metrics**: Accuracy, Precision, Recall, F1-Score, AUC-ROC for classification; MSE, RMSE, MAE, R² for regression
 - **Data Distribution Plots**: 2D PCA projections of datasets
@@ -107,6 +108,19 @@ Feature1,Feature2,Feature3,Feature4,Target
 - Learning Rate: 0.1-2.0
 - Algorithm: SAMME, SAMME.R (Classification only)
 
+**Decision Tree** (Classification & Regression):
+- Max Depth: 0-50 (0=unlimited for no depth restriction)
+- Min Samples Split: 2-50
+- Min Samples Leaf: 1-20
+- Max Features: None, sqrt, log2, auto
+- Criterion: 
+  - Classification: gini, entropy, log_loss
+  - Regression: squared_error, friedman_mse, absolute_error, poisson
+- Splitter: best, random
+- Min Impurity Decrease: 0.0-1.0
+- Cost Complexity Pruning Alpha (ccp_alpha): 0.0-0.1
+- Class Weight (Classification only): None, balanced
+
 ## 📊 Visualization Tabs
 
 ### 1. Performance Metrics
@@ -168,6 +182,7 @@ sklearn_hp/
 
 ### Classification:
 - **Random Forest**: Ensemble of decision trees
+- **Decision Tree**: Single tree classifier - interpretable and easy to visualize
 - **Logistic Regression**: Linear classification model
 - **Gradient Boosting**: Sequentially boosted tree ensemble
 - **SGD Classifier**: Stochastic gradient descent classifier
@@ -175,6 +190,7 @@ sklearn_hp/
 
 ### Regression:
 - **Linear Regression**: Basic linear model
+- **Decision Tree Regressor**: Single tree for continuous predictions
 - **Random Forest Regressor**: Random forest for continuous outputs
 - **Gradient Boosting Regressor**: GB trees for regression
 - **SGD Regressor**: SGD for regression tasks
