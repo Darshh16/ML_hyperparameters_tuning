@@ -10,6 +10,7 @@ A comprehensive web application for visualizing and experimenting with machine l
 - **Real-World Datasets**: Iris, Wine, Breast Cancer, Digits, Adult Income, California Housing, and synthetic datasets
 - **Comprehensive Hyperparameters**: Every algorithm has full control over its hyperparameters
 - **Decision Tree Integration**: Full Decision Tree support with 9+ tunable hyperparameters
+- **🌳 Tree Structure Visualization**: See the complete tree diagram, complexity stats, and decision paths
 - **Interactive Visualizations**: Decision boundaries, confusion matrices, feature importance plots
 - **Performance Metrics**: Accuracy, Precision, Recall, F1-Score, AUC-ROC for classification; MSE, RMSE, MAE, R² for regression
 - **Data Distribution Plots**: 2D PCA projections of datasets
@@ -148,6 +149,22 @@ Feature1,Feature2,Feature3,Feature4,Target
 - Algorithm and dataset information
 - Hyperparameters used
 - Complete model configuration
+
+### 7. Tree Structure ⭐ (Decision Tree Only)
+- **Full Tree Structure**: Visual diagram of the complete tree with all splits
+- **Tree Complexity**: Statistics showing depth, leaves, nodes, and top features
+- **Decision Path**: Trace the exact path taken by the model for specific instances
+- **Tree Rules**: View decision rules in text format for interpretation
+- **Adjustable Depth**: Control visualization depth to manage complexity
+
+**Features:**
+- Fully interactive tree visualization with sklearn.tree.plot_tree()
+- Color-coded nodes indicating split quality
+- Feature names and split thresholds displayed at each node
+- Sample counts and class distributions shown
+- Support for both classification and regression trees
+
+**See Also:** [Tree Visualization Guide](TREE_VISUALIZATION_GUIDE.md) for detailed documentation
 
 ## 🛠️ Project Structure
 

@@ -198,3 +198,145 @@ def plot_data_distribution(X, y, feature_names, class_names=None):
     )
     
     return fig
+
+def plot_decision_tree(model, feature_names, class_names=None, max_depth=None):
+    """Plot decision tree structure"""
+    from sklearn.tree import plot_tree
+    
+    fig, ax = plt.subplots(figsize=(20, 12))
+    
+    plot_tree(
+        model,
+        feature_names=feature_names,
+        class_names=class_names,
+        filled=True,
+        rounded=True,
+        fontsize=10,
+        ax=ax,
+        max_depth=max_depth
+    )
+    
+    plt.title('Decision Tree Structure', fontsize=16, fontweight='bold', pad=20)
+    plt.tight_layout()
+    
+    return fig
+
+def get_tree_text_representation(model, feature_names):
+    """Get text representation of decision tree"""
+    from sklearn.tree import export_text
+    
+    tree_rules = export_text(model, feature_names=list(feature_names))
+    return tree_rules
+
+def plot_tree_depth_complexity(model):
+    """Plot tree depth and node complexity statistics"""
+    
+    # Get tree statistics
+    tree = model.tree_
+    depth = np.array([0])
+    
+    def get_tree_depth(node_id, current_depth):
+        if tree.feature[node_id] == -2:  # Leaf node
+            return current_depth
+        else:
+            left_depth = get_tree_depth(tree.children_left[node_id], current_depth + 1)
+            right_depth = get_tree_depth(tree.children_right[node_id], current_depth + 1)
+            return max(left_depth, right_depth)
+    
+    actual_depth = get_tree_depth(0, 0)
+    num_leaves = np.sum(tree.feature == -2)
+    num_nodes = tree.node_count
+    
+    # Create visualization
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+    
+    # Tree statistics bar chart
+    stats = ['Depth', 'Leaves', 'Nodes']
+    values = [actual_depth, num_leaves, num_nodes]
+    colors = ['#FF6B6B', '#4ECDC4', '#45B7D1']
+    
+    ax1.bar(stats, values, color=colors, alpha=0.7, edgecolor='black', linewidth=2)
+    ax1.set_ylabel('Count', fontsize=12, fontweight='bold')
+    ax1.set_title('Tree Complexity Statistics', fontsize=14, fontweight='bold')
+    for i, v in enumerate(values):
+        ax1.text(i, v + max(values)*0.02, str(v), ha='center', fontweight='bold')
+    
+    # Feature importance from tree
+    feature_importance = model.feature_importances_
+    feature_names = np.arange(len(feature_importance))
+    
+    indices = np.argsort(feature_importance)[::-1][:10]
+    
+    ax2.barh(range(len(indices)), feature_importance[indices], color='#95E1D3', edgecolor='black', linewidth=1.5)
+    ax2.set_yticks(range(len(indices)))
+    ax2.set_yticklabels([f'Feature {i}' for i in indices])
+    ax2.set_xlabel('Importance', fontsize=12, fontweight='bold')
+    ax2.set_title('Top 10 Feature Importance', fontsize=14, fontweight='bold')
+    ax2.invert_yaxis()
+    
+    plt.tight_layout()
+    return fig
+
+def plot_tree_path_analysis(model, X, feature_names, instance_index=0):
+    """Analyze and visualize decision path for a specific instance"""
+    from sklearn.tree import _tree
+    
+    decision_path = model.decision_path(X[[instance_index]]).toarray()[0]
+    leaf_id = np.argmax(decision_path)
+    
+    # Get the decision path
+    node_index = leaf_id
+    path = []
+    feature_path = []
+    threshold_path = []
+    value_path = []
+    
+    tree = model.tree_
+    
+    def get_path(node_id):
+        if node_id == 0:
+            return [(node_id, "Root", -1, -1, tree.value[node_id])]
+        
+        parent_id = None
+        for i in range(tree.node_count):
+            if tree.children_left[i] == node_id or tree.children_right[i] == node_id:
+                parent_id = i
+                break
+        
+        if parent_id is not None:
+            is_left = tree.children_left[parent_id] == node_id
+            feature = tree.feature[parent_id]
+            threshold = tree.threshold[parent_id]
+            direction = "LEFT" if is_left else "RIGHT"
+            
+            return get_path(parent_id) + [(node_id, direction, feature, threshold, tree.value[node_id])]
+        return [(node_id, "Root", -1, -1, tree.value[node_id])]
+    
+    path_info = get_path(leaf_id)
+    
+    # Visualize path
+    fig, ax = plt.subplots(figsize=(12, 8))
+    
+    path_text = "Decision Path for Instance #0:\n" + "="*50 + "\n\n"
+    for i, (node_id, direction, feature, threshold, value) in enumerate(path_info):
+        indent = "  " * i
+        if direction == "Root":
+            path_text += f"{indent}[Root Node {node_id}]\n"
+            path_text += f"{indent}Samples: {int(tree.n_node_samples[node_id])}\n"
+        else:
+            feature_name = feature_names[feature] if feature >= 0 else "N/A"
+            path_text += f"{indent}→ {direction}: {feature_name} {'<=' if direction == 'LEFT' else '>'} {threshold:.4f}\n"
+            path_text += f"{indent}  [Node {node_id}] Samples: {int(tree.n_node_samples[node_id])}\n"
+    
+    path_text += f"\n{'='*50}\n"
+    path_text += f"Predicted Class/Value: {tree.value[leaf_id]}\n"
+    
+    ax.text(0.05, 0.95, path_text, transform=ax.transAxes, fontsize=10,
+            verticalalignment='top', fontfamily='monospace',
+            bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+    ax.axis('off')
+    
+    plt.title('Decision Path Analysis', fontsize=14, fontweight='bold')
+    plt.tight_layout()
+    
+    return fig

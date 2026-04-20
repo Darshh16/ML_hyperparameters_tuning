@@ -6,7 +6,8 @@ from models import train_model, get_available_algorithms
 from visualizations import (
     plot_decision_boundaries, plot_confusion_matrix, plot_feature_importance,
     plot_metrics_comparison, plot_learning_curve, plot_predicted_vs_actual,
-    plot_roc_curve, plot_data_distribution
+    plot_roc_curve, plot_data_distribution, plot_decision_tree, plot_tree_depth_complexity,
+    plot_tree_path_analysis, get_tree_text_representation
 )
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import confusion_matrix
@@ -168,13 +169,14 @@ if run_button:
             st.success("✅ Data loaded successfully!")
         
         # Create tabs for different visualizations
-        tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
+        tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs([
             "📈 Performance Metrics",
             "🎨 Decision Boundaries",
             "🔍 Confusion Matrix",
             "⭐ Feature Importance",
             "📊 Data Distribution",
-            "📋 Model Info"
+            "📋 Model Info",
+            "🌳 Tree Structure"
         ])
         
         with st.spinner("Training model..."):
@@ -297,6 +299,78 @@ if run_button:
             # Model string representation
             st.write("**Model Configuration:**")
             st.code(str(model))
+        
+        # Tab 7: Tree Structure (Decision Tree only)
+        with tab7:
+            if algorithm == "Decision Tree":
+                st.subheader("🌳 Decision Tree Structure Visualization")
+                
+                tree_viz_options = st.radio(
+                    "Select Visualization Type:",
+                    ["Full Tree Structure", "Tree Complexity", "Decision Path"],
+                    horizontal=True
+                )
+                
+                if tree_viz_options == "Full Tree Structure":
+                    st.write("**Tree Structure Diagram**")
+                    col1, col2 = st.columns([3, 1])
+                    with col1:
+                        st.info("📌 This shows the complete decision tree structure with feature splits, thresholds, and node samples.")
+                    with col2:
+                        max_depth_display = st.slider("Display Depth Limit", 1, 10, 3)
+                    
+                    try:
+                        fig = plot_decision_tree(
+                            model, 
+                            feature_names=feature_names,
+                            class_names=target_names,
+                            max_depth=max_depth_display
+                        )
+                        st.pyplot(fig, use_container_width=True)
+                        st.success("✅ Tree structure displayed successfully!")
+                    except Exception as e:
+                        st.error(f"Could not visualize tree: {str(e)}")
+                
+                elif tree_viz_options == "Tree Complexity":
+                    st.write("**Tree Complexity & Feature Importance**")
+                    st.info("📌 Shows statistics about tree depth, number of leaves and nodes, plus the most important features used in splits.")
+                    try:
+                        fig = plot_tree_depth_complexity(model)
+                        st.pyplot(fig, use_container_width=True)
+                    except Exception as e:
+                        st.error(f"Could not plot tree complexity: {str(e)}")
+                
+                elif tree_viz_options == "Decision Path":
+                    st.write("**Decision Path for Sample Instance**")
+                    st.info("📌 Shows the complete decision path taken by the model for a specific instance from root to leaf.")
+                    
+                    sample_idx = st.slider("Select Instance Index", 0, len(X_test) - 1, 0)
+                    
+                    try:
+                        fig = plot_tree_path_analysis(model, X_test, feature_names, sample_idx)
+                        st.pyplot(fig, use_container_width=True)
+                    except Exception as e:
+                        st.error(f"Could not plot decision path: {str(e)}")
+                
+                # Show tree rules in text format
+                with st.expander("📝 View Tree Rules as Text"):
+                    try:
+                        tree_rules = get_tree_text_representation(model, feature_names)
+                        st.code(tree_rules, language="text")
+                    except Exception as e:
+                        st.warning(f"Could not generate text rules: {str(e)}")
+            
+            else:
+                st.info(f"🚫 Tree structure visualization is only available for Decision Tree models. You selected: {algorithm}")
+                st.write("""
+                **Why Decision Trees?**
+                - Decision Trees create explicit rules that are easy to interpret
+                - Visual tree structure shows exactly how the model makes decisions
+                - Each node represents a feature split threshold
+                - Leaf nodes show the final predictions
+                
+                **Switch to Decision Tree** to see detailed tree structure visualizations!
+                """)
 
 else:
     # Initial state - Show welcome message and instructions
@@ -320,6 +394,7 @@ else:
         - Gradient Boosting Classifier
         - SGD Classifier
         - AdaBoost Classifier
+        - **Decision Tree** ⭐ (with tree structure visualization!)
         
         **Regression:**
         - Linear Regression
@@ -327,6 +402,7 @@ else:
         - Gradient Boosting Regressor
         - SGD Regressor
         - AdaBoost Regressor
+        - **Decision Tree** ⭐ (with tree structure visualization!)
         
         ### Available Datasets:
         - **Iris** - Classic flower classification dataset
