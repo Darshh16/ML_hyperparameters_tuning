@@ -386,9 +386,9 @@ else:
         4. **Adjust Hyperparameters** - Fine-tune in the sidebar
         5. **Train & Visualize** - Click "Train Model" to see results
         
-        ### Available Algorithms:
+        ### Available Algorithms (12 Total):
         
-        **Classification:**
+        **Classification (6):**
         - Random Forest
         - Logistic Regression
         - Gradient Boosting Classifier
@@ -396,7 +396,7 @@ else:
         - AdaBoost Classifier
         - **Decision Tree** ⭐ (with tree structure visualization!)
         
-        **Regression:**
+        **Regression (6):**
         - Linear Regression
         - Random Forest Regressor
         - Gradient Boosting Regressor
@@ -404,31 +404,46 @@ else:
         - AdaBoost Regressor
         - **Decision Tree** ⭐ (with tree structure visualization!)
         
-        ### Available Datasets:
-        - **Iris** - Classic flower classification dataset
-        - **Wine** - Wine classification dataset
-        - **Breast Cancer** - Medical classification dataset
-        - **Digits** - Handwritten digits (8x8 pixel images)
-        - **Make Classification** - Synthetic classification data
-        - **Make Regression** - Synthetic regression data
+        ### Available Datasets (11 Total):
+        
+        **Classic Datasets:**
+        - Iris, Wine, Breast Cancer, Digits
+        - Make Classification, Make Regression
+        
+        **Real-World Datasets:**
+        - Adult (Income) - Income prediction
+        - California Housing - Housing prices
+        
+        **🌍 New Kaggle Datasets:**
+        - **🚢 Titanic** - Survival prediction (12,818+ competition teams)
+        - **🏥 Pima Diabetes** - Medical diagnosis (789K+ downloads)
+        - **🏠 House Prices** - Price prediction (4,881+ competition teams)
+        
+        **📤 Custom Data:**
+        - Upload your own CSV files!
         """)
     
     with col2:
         st.info("""
         ### 🎯 Key Features
+        - 12 ML algorithms (6 classification, 6 regression)
+        - 11 famous datasets + CSV upload
         - Real-time hyperparameter tuning
-        - Interactive visualizations
+        - 7 interactive visualization tabs
+        - 🌳 Decision Tree visualization
         - Multiple performance metrics
-        - Decision boundary plots
-        - Feature importance analysis
-        - Confusion matrices & ROC curves
+        - Decision boundaries & ROC curves
+        - Tree structure & complexity analysis
         """)
     
     st.markdown("---")
     st.markdown("""
     ### 📚 About This Tool
     This application leverages scikit-learn to provide an intuitive interface for understanding
-    how hyperparameters affect machine learning model performance. Perfect for learning and experimentation!
+    how hyperparameters affect machine learning model performance. Includes popular Kaggle competition
+    datasets for real-world experience. Perfect for learning and experimentation!
+    
+    **Latest Addition:** 3 famous Kaggle datasets (Titanic, Pima Diabetes, House Prices)
     """)
 
 # Footer

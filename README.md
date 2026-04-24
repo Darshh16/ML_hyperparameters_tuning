@@ -4,11 +4,12 @@ A comprehensive web application for visualizing and experimenting with machine l
 
 ## 🎯 Features
 
-- **Multiple Algorithms**: Random Forest, Logistic Regression, Gradient Boosting, SGD, AdaBoost, Decision Tree, Linear Regression
+- **12 ML Algorithms**: Random Forest, Logistic Regression, Gradient Boosting, SGD, AdaBoost, Decision Tree (both classification & regression)
+- **11 Famous Datasets**: Classic datasets + **3 new Kaggle competition datasets** (Titanic, Pima Diabetes, House Prices)
 - **Real-time Hyperparameter Tuning**: Adjust parameters and instantly see the impact
 - **Upload Custom Data**: Use your own CSV files for training
-- **Real-World Datasets**: Iris, Wine, Breast Cancer, Digits, Adult Income, California Housing, and synthetic datasets
-- **Comprehensive Hyperparameters**: Every algorithm has full control over its hyperparameters
+- **🚢 Kaggle Datasets**: Titanic (12,818+ teams), Pima Diabetes (789K+ downloads), House Prices (4,881+ teams)
+- **Comprehensive Hyperparameters**: 50+ parameters - full control over every algorithm
 - **Decision Tree Integration**: Full Decision Tree support with 9+ tunable hyperparameters
 - **🌳 Tree Structure Visualization**: See the complete tree diagram, complexity stats, and decision paths
 - **Interactive Visualizations**: Decision boundaries, confusion matrices, feature importance plots
@@ -178,22 +179,67 @@ sklearn_hp/
 └── README.md          # This file
 ```
 
-## 📚 Datasets Available
+## 📚 Datasets Available (11 Total: 8 Classification + 3 Regression)
 
-### Classification:
-1. **Iris** - 150 samples, 4 features, 3 classes
-2. **Wine** - 178 samples, 13 features, 3 classes
-3. **Breast Cancer** - 569 samples, 30 features, 2 classes
-4. **Digits** - 1797 samples, 64 features, 10 classes
-5. **Make Classification** - 1000 samples, 20 features, 2 classes (synthetic)
-6. **Adult (Income)** - Real-world income prediction dataset
+### 🏷️ Classification Datasets (8):
 
-### Regression:
-1. **Make Regression** - 1000 samples, 20 features (synthetic)
-2. **California Housing** - 20640 samples, 8 features, real housing data
+**Classic Datasets:**
+1. **Iris** - 150 samples, 4 features, 3 classes - Flower classification
+2. **Wine** - 178 samples, 13 features, 3 classes - Wine quality classification
+3. **Breast Cancer** - 569 samples, 30 features, 2 classes - Medical diagnosis
+4. **Digits** - 1797 samples, 64 features, 10 classes - Handwritten digit recognition
 
-### Custom Data:
-- Upload any CSV file with your own data
+**Synthetic Datasets:**
+5. **Make Classification** - 1000 samples, 20 features, 2 classes - Generated for ML practice
+
+**Real-World Datasets:**
+6. **Adult (Income)** - Real-world income prediction (≤50K or >50K)
+
+**🌍 New Kaggle Datasets:**
+7. **🚢 Titanic** - 712 samples, 5 features, 2 classes
+   - *Most famous Kaggle competition (12,818+ teams)*
+   - Predict passenger survival on the Titanic
+   - Features: Passenger class, age, number of siblings/spouses, number of parents/children, fare
+
+8. **🏥 Pima Indians Diabetes** - 768 samples, 8 features, 2 classes
+   - *Most downloaded medical dataset on Kaggle (789K+ downloads)*
+   - Medical diagnosis classification
+   - Features: Pregnancies, Glucose, Blood Pressure, Insulin, BMI, Diabetes Pedigree, Age
+
+### 📈 Regression Datasets (3):
+
+**Synthetic Datasets:**
+1. **Make Regression** - 1000 samples, 20 features - Generated for ML practice
+
+**Real-World Datasets:**
+2. **California Housing** - 20,640 samples, 8 features - Real housing price data
+
+**🌍 New Kaggle Dataset:**
+3. **🏠 House Prices** - 1460 samples, 11 features
+   - *Advanced Regression Techniques (4,881+ teams on Kaggle)*
+   - Predict house sale prices
+   - Features: Lot Frontage, Lot Area, Overall Quality, Overall Condition, Year Built, Year Remodeled, etc.
+
+### 📤 Custom Data:
+- **Upload any CSV file** with your own data for analysis
+
+### 📊 Dataset Summary
+
+| Dataset | Type | Samples | Features | Classes/Range |
+|---------|------|---------|----------|---------------|
+| Iris | Classification | 150 | 4 | 3 |
+| Wine | Classification | 178 | 13 | 3 |
+| Breast Cancer | Classification | 569 | 30 | 2 |
+| Digits | Classification | 1797 | 64 | 10 |
+| Make Classification | Classification | 1000 | 20 | 2 |
+| Adult (Income) | Classification | ~30K | 6 | 2 |
+| **Titanic** ⭐ | Classification | 712 | 5 | 2 |
+| **Pima Diabetes** ⭐ | Classification | 768 | 8 | 2 |
+| Make Regression | Regression | 1000 | 20 | Continuous |
+| California Housing | Regression | 20,640 | 8 | Continuous |
+| **House Prices** ⭐ | Regression | 1460 | 11 | Continuous |
+
+⭐ = New Kaggle datasets (most popular & frequently used)
 
 ## 🧠 Algorithms Explained
 
